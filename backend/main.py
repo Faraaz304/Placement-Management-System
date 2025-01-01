@@ -1,13 +1,18 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
 # MongoDB Atlas connection
-client = MongoClient("your_mongodb_atlas_connection_string")
-db = client['your_database_name']
+mongo_connection_string = os.getenv("MONGODB_CONNECTION_STRING")
+client = MongoClient(mongo_connection_string)
+db = client['Placement_Management_System']
 users_collection = db['users']
 
 @app.route('/')
@@ -16,6 +21,7 @@ def hello():
 
 @app.route('/signup', methods=['POST'])
 def signup():
+    print('hello')
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')

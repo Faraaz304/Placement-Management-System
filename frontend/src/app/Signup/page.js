@@ -31,9 +31,27 @@ export default function Signup() {
     }
 
     try {
-      // Here you would typically make an API call to create the user account
-      // For now, we'll just redirect to dashboard
-      router.push("/Dashboard"); // Note: URL paths are typically lowercase
+      const response = await fetch('http://127.0.0.1:5000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          confirm_password: formData.confirmPassword
+        })
+      });
+
+
+      const result = await response.json();
+console.log(response)
+      if (!response.ok) {
+        throw new Error(result.message || "Something went wrong");
+      }
+
+      // Redirect to dashboard on successful signup
+      router.push("/Dashboard");
     } catch (err) {
       setError(err.message || "Something went wrong");
     }
