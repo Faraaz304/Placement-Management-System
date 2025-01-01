@@ -41,7 +41,7 @@ def signup():
 
 @app.route('/login', methods=['POST'])
 def login():
-    print("Request for loginn")
+    print("Request for login")
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
