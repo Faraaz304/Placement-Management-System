@@ -21,6 +21,7 @@ def hello():
 
 @app.route('/signup', methods=['POST'])
 def signup():
+    print("Request for signup")
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -37,8 +38,10 @@ def signup():
     users_collection.insert_one(user_data)
     
     return jsonify({"message": "Signup successful", "email": email})
+
 @app.route('/login', methods=['POST'])
 def login():
+    print("Request for login")
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
