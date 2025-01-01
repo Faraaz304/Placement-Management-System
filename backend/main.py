@@ -21,7 +21,6 @@ def hello():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    print('hello')
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -38,6 +37,18 @@ def signup():
     users_collection.insert_one(user_data)
     
     return jsonify({"message": "Signup successful", "email": email})
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    
+    user = users_collection.find_one({"email": email})
+    
+    if user and user['password'] == password:
+        return jsonify({"message": "Login successful", "email": email})
+    else:
+        return jsonify({"message": "Invalid email or password"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True)

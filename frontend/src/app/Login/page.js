@@ -24,7 +24,7 @@ export default function Login() {
     setError("");
     
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('http://127.0.0.1:5000/login', { // Updated endpoint to match Flask
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,10 +33,11 @@ export default function Login() {
       });
 
       const data = await response.json();
+      console.log(data)
 
       if (response.ok) {
         // Successful login
-        router.push("/dashboard");
+        router.push("/Dashboard");
       } else {
         // Handle error from server
         setError(data.message || "Login failed. Please try again.");
