@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: ""
@@ -37,21 +37,21 @@ export default function Signup() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          username: formData.username,
           email: formData.email,
           password: formData.password,
           confirm_password: formData.confirmPassword
         })
       });
 
-
       const result = await response.json();
-console.log(response)
+      console.log(response);
       if (!response.ok) {
         throw new Error(result.message || "Something went wrong");
       }
 
       // Redirect to dashboard on successful signup
-      router.push("/Dashboard");
+      router.push(`/${formData.username}/Dashboard`);
     } catch (err) {
       setError(err.message || "Something went wrong");
     }
@@ -70,14 +70,14 @@ console.log(response)
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Full Name
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              Username
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"

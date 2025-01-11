@@ -23,6 +23,7 @@ def hello():
 def signup():
     print("Request for signup")
     data = request.get_json()
+    username = data.get('username')
     email = data.get('email')
     password = data.get('password')
     confirm_password = data.get('confirm_password')
@@ -31,17 +32,18 @@ def signup():
         return jsonify({"message": "Passwords do not match"}), 400
     
     user_data = {
+        "username": username,
         "email": email,
         "password": password
     }
     
     users_collection.insert_one(user_data)
     
-    return jsonify({"message": "Signup successful", "email": email})
+    return jsonify({"message": "Signup successful", "email": email, "username": username})
 
 @app.route('/login', methods=['POST'])
 def login():
-    print("Request for login h")
+    print("Request for login")
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -49,7 +51,8 @@ def login():
     user = users_collection.find_one({"email": email})
     
     if user and user['password'] == password:
-        return jsonify({"message": "Login successful", "email": email})
+        return jsonify({"message": "Login successful", "email": email, "username": user['username']})
+    
     else:
         return jsonify({"message": "Invalid email or password"}), 401
 
