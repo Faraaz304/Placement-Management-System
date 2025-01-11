@@ -21,7 +21,7 @@ def hello():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    print("Request for signup")
+    
     data = request.get_json()
     username = data.get('username')
     email = data.get('email')
