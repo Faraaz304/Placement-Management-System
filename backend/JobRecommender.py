@@ -1,14 +1,11 @@
 from pymongo import MongoClient
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense
 import re
 from PyPDF2 import PdfReader
 from dotenv import load_dotenv
 import os 
-import csv
-from io import StringIO
+
 load_dotenv()
 # MongoDB setup
 MONGO_URI = os.getenv("MONGODB_CONNECTION_STRING")
@@ -162,28 +159,28 @@ def parse_resume(resume_file):
 # print(resume_data_csv)
 
 
-def train_similarity_model():
-    """
-    Train a simple neural network model to combine weighted similarity scores.
-    Returns the trained model.
-    """
-    model = Sequential([
-        Dense(8, input_dim=3, activation='relu'),  # 3 inputs: skills, location, experience
-        Dense(4, activation='relu'),
-        Dense(1, activation='linear')  # Output a single score
-    ])
-    model.compile(optimizer='adam', loss='mean_squared_error')
+# def train_similarity_model():
+#     """
+#     Train a simple neural network model to combine weighted similarity scores.
+#     Returns the trained model.
+#     """
+#     model = Sequential([
+#         Dense(8, input_dim=3, activation='relu'),  # 3 inputs: skills, location, experience
+#         Dense(4, activation='relu'),
+#         Dense(1, activation='linear')  # Output a single score
+#     ])
+#     model.compile(optimizer='adam', loss='mean_squared_error')
     
-    # Example dummy training data for weights tuning
-    X_train = np.array([
-        [0.9, 1, 0.8],
-        [0.4, 0, 0.5],
-        [0.1, 1, 0.2],
-    ])
-    y_train = np.array([0.95, 0.35, 0.5])
+#     # Example dummy training data for weights tuning
+#     X_train = np.array([
+#         [0.9, 1, 0.8],
+#         [0.4, 0, 0.5],
+#         [0.1, 1, 0.2],
+#     ])
+#     y_train = np.array([0.95, 0.35, 0.5])
     
-    model.fit(X_train, y_train, epochs=50, verbose=0)
-    return model
+#     model.fit(X_train, y_train, epochs=50, verbose=0)
+#     return model
 
 def recommend_jobs_from_resume(resume_file, top_n=5):
     """

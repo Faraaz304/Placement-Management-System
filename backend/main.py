@@ -3,7 +3,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-from test import parse_resume  # Assuming parse_resume is a function that takes a file and returns parsed data
+from JobRecommender import parse_resume  # Assuming parse_resume is a function that takes a file and returns parsed data
 load_dotenv()
 
 app = Flask(__name__)
