@@ -3,7 +3,6 @@ from flask_cors import CORS
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-from test import parse_resume 
 
 load_dotenv()
 
@@ -56,13 +55,6 @@ def login():
     
     else:
         return jsonify({"message": "Invalid email or password"}), 401
-
-@app.route('/analyze-resume', methods=['POST'])
-def analyze_resume():
-    file = request.files['file']
-    # Process the file using parse_resume
-    result = parse_resume(file)
-    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
