@@ -23,7 +23,7 @@ const ResumeUpload = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:5000/upload_resume', { // Adjust the URL as needed
+            const response = await fetch('https://placement-management-system-backend.vercel.app/upload_resume', { // Adjust the URL as needed
                 method: 'POST',
                 body: formData,
             });
